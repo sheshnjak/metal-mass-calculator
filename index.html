@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="angular.min.js"></script>
+    <link rel="stylesheet" href="css.css" />
+    <script src="js.js"></script>
+  </head>
+  <body>
+  <div ng-app="kalk" ng-controller="kalk">
+<!--
+	<input type="radio" ng-model="shape" name="shape" value="šipka" checked />Šipka<br/>
+	<input type="radio" ng-model="shape" name="shape" value="ploča" />Ploča<br/>
+	<input type="radio" ng-model="shape" name="shape" value="šesterokutna šipka" />Šesterokutna šipka<br/>
+	<input type="radio" ng-model="shape" name="shape" value="cijev" />Cijev<br/>
+	<div ng-switch="shape">
+		<div ng-switch-when="šipka">
+			<h1>Šipka</h1>
+			<p>
+			promjer: <input type="number" ng-model="promjer"><br/>
+			duljina: <input type="number" ng-model="duljina"><br/>
+			</p>
+			volumen = {{volume = promjer * promjer * 3.14 * duljina / 4 }}<br/>
+			masa = {{volume * 7850 / 1000000000}} kg
+
+		</div>
+		<div ng-switch-when="ploča">
+			<h1>Ploča</h1>
+			<p>
+			duljina: <input type="number" ng-model="duljina"><br/>
+			širina: <input type="number" ng-model="sirina"><br/>
+			visina: <input type="number" ng-model="visina">
+			</p>
+			volumen = {{volume = duljina * sirina * visina}}<br/>
+			masa = {{volume * 7800 / 1000 / 1000 / 1000}} kg
+		</div>
+		<div ng-switch-when="šesterokutna šipka">
+			<h1>Šesterokutna šipka</h1>
+			<p>
+			duljina: <input type="number" ng-model="duljina"><br/>
+			širina: <input type="number" ng-model="sirina"><br/>
+			visina: <input type="number" ng-model="visina">
+			</p>
+		</div>
+		<div ng-switch-when="cijev">
+			<h1>Cijev</h1>
+			<p>
+			duljina: <input type="number" ng-model="duljina"><br/>
+			širina: <input type="number" ng-model="sirina"><br/>
+			visina: <input type="number" ng-model="visina">
+			</p>
+		</div>
+	</div>
+	<table>
+		<thead>Čelik</thead><thead>Aluminij</thead>
+		<tr>
+			<td>{{$scope.volume}}</td>
+			<td>2</td>
+		</tr>
+	</table>
+			<button ng-click="test()">test</button>
+	<div id="status" style="display:block;float:right">
+		<h3>status</h3>
+		<p>oblik: {{$scope.shape}}</p>
+		<p>volumen: {{$scope.volume}}</p>
+		<p>masa: {{$scope.mass}}</p>
+		<p id="scope">scope:</p>
+	</div>
+-->
+	<span class="izbornik" ng-repeat="shape in shapes" ng-click="setCurrentShape(shape)">
+		<span>{{shape.name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</span>
+	<h4>{{currentShape.name}}:</h4>
+	<h4>{{currentShape.input}}:</h4>
+	<h4>volumen: {{$eval(currentShape.formula)}}</h4>
+	<div class="unosPodataka" ng-repeat="unos in currentShape.vars">
+		<span class="unos">{{unos}}:&nbsp;<input type="number" ng-model="currentShape.input[$index]" /></span>
+	</div>
+  </div>
+  
+  <script>
+var app = angular.module('kalk', []);
+    
+app.controller('kalk', function($scope) {
+/*    $scope.calc = {
+		input: '',
+		result: ''
+	};
+	$scope.mass = 0;
+    $scope.shape = "";
+	$scope.test = function (){alert($scope.calc)}
+	
+	console.log("User = ", $scope.calc);
+*/
+
+$scope.shapes = [ // definition of shapes, declaring variables and calculation formulas
+	{name:'Šipka', vars: ['d','l'], input:[], formula:'currentShape.input[0]*currentShape.input[0]*3.14159/4*currentShape.input[1]*0.000000001'},
+	{name:'Ploča', vars: ['duljina','širina','visina'], input:[], formula:'a*b*c'},
+	{name:'Cijev', vars: ['promjer','debljina stijenke','duljina'], input:[], formula:'((d*d*3.14)-(s*s*3.14))*l'}
+];
+$scope.currentShape = $scope.shapes[0]; // default shape
+$scope.setCurrentShape = function(shape){$scope.currentShape = shape;}; // custom shape
+});
+
+  </script>
+  </body>
+
+</html>
