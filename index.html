@@ -29,8 +29,8 @@
 		<div ng-switch-when="Cijev">
 				promjer: <input type="number" ng-model="currentShape.diameter"><br/><br/>
 				duljina: <input type="number" ng-model="currentShape.length"><br/><br/>
-				debljina stijenke: <input type="number" ng-model="currentShape.thickness"><br/><br/>
-				unutarnji promjer: <input type="number" ng-model="currentShape.innerDia">
+				debljina stijenke: <input type="number" ng-model="currentShape.wallThickness"><br/><br/>
+<!--			unutarnji promjer: <input type="number" ng-model="currentShape.innerDia">-->
 		</div>
 		<div ng-switch-when="šesterokutna šipka">
 			<h1>Šesterokutna šipka</h1>
@@ -40,8 +40,7 @@
 			</p>
 		</div>
 	</div>
-<!--
-	<table>
+<!--<table>
 		<thead>Čelik</thead><thead>Aluminij</thead>
 		<tr>
 			<td>{{$scope.volume}}</td>
@@ -50,47 +49,43 @@
 	</table>
 	<button ng-click="test()">test</button>
 -->
-	<div id="status" style="display:block;float:right">
+
+	<div id="status" style="display:block;float:left">
 		<h3>status</h3>
-		<p>oblik: {{$scope.currentShape}}</p>
-		<p>volumen: {{$scope.currentShape.volume}} mm<sup>3</sup></p>
-		<p>masa: {{$scope.currentShape.mass}}</p>
-		<p id="scope">scope:</p>
+		<p>oblik: {{currentShape.name}}</p>
+		<p>{{currentShape}}</p>
+		<p>volumen: {{volume(currentShape)}} mm<sup>3</sup></p>
+		<p>masa: {{currentShape.mass}}</p>
 	</div>
-	
-	
-	<h4>{{currentShape}}:</h4>
-	<h4>volumen: {{$eval(currentShape.formula)}} mm<sup>3</sup></h4>
-<!--
-	<div class="unosPodataka" ng-repeat="unos in currentShape.vars">
-		<span class="unos">{{unos}}:&nbsp;<input type="number" ng-model="currentShape.input[$index]" /></span>
-	</div>
--->
   </div>
-  
   <script>
 var app = angular.module('kalk', []);
     
 app.controller('kalk', function($scope) {
-/*    $scope.calc = {
-		input: '',
-		result: ''
-	};
-	$scope.mass = 0;
-    $scope.shape = "";
-	$scope.test = function (){alert($scope.calc)}
-	
-	console.log("User = ", $scope.calc);
-*/
 
 $scope.shapes = [ // definition of shapes, declaring variables and calculation formulas
-	{name:'Šipka', diameter: 0, length:0, formula:'currentShape.diameter*currentShape.diameter*3.14159/4*currentShape.length*0.000000001'},
-	{name:'Ploča', length: 0, width: 0, height: 0, formula:'currentShape.length*currentShape.width*currentShape.height'},
-	{name:'Cijev', vars: ['promjer','debljina stijenke','duljina'], input:[], formula:'((d*d*3.14)-(s*s*3.14))*l'}
+	{name:'Šipka', diameter: 10, length: 10},
+	{name:'Ploča', length: 10, width: 10, height: 10},
+	{name:'Cijev', diameter: 20, wallThickness: 2, length: 10}
 ];
 $scope.currentShape = $scope.shapes[0]; // default shape
 $scope.setCurrentShape = function(shape){$scope.currentShape = shape;}; // user select shape
-// $scope.currentShape.volume = $eval($scope.currentShape.formula);
+
+$scope.volume = function(currentShape){
+	switch (currentShape.name){
+		case 'Šipka':
+			return $scope.currentShape.volume = currentShape.diameter*currentShape.diameter*3.14159/4*currentShape.length*0.000000001;
+			break;
+		case 'Ploča':
+			return $scope.currentShape.volume = currentShape.length*currentShape.width*currentShape.height;
+			break;
+		case 'Cijev':
+			return $scope.currentShape.volume = (3.14159*currentShape.wallThickness*(currentShape.diameter-currentShape.wallThickness)*currentShape.length*0.000000001);
+			break;
+
+	}
+};
+
 });
 
   </script>
