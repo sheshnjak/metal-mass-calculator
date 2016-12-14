@@ -40,27 +40,27 @@
 			</p>
 		</div>
 	</div>
-<!--<table>
-		<thead>Čelik</thead><thead>Aluminij</thead>
+	<table border="1" >
+		<caption>Izračunata masa</caption>
+		<th>Čelik</th><th>Aluminij</th>
 		<tr>
-			<td>{{$scope.volume}}</td>
-			<td>2</td>
+			<td>{{currentShape.volume*7850 | number:3}} kg</td>
+			<td>{{currentShape.volume*2700 | number:3}} kg</td>
 		</tr>
 	</table>
-	<button ng-click="test()">test</button>
--->
+
 
 	<div id="status" style="display:block;float:left">
 		<h3>status</h3>
 		<p>oblik: {{currentShape.name}}</p>
 		<p>{{currentShape}}</p>
-		<p>volumen: {{volume(currentShape)}} mm<sup>3</sup></p>
+		<p>volumen: {{volume(currentShape)}} m<sup>3</sup></p>
 		<p>masa: {{currentShape.mass}}</p>
 	</div>
   </div>
   <script>
 var app = angular.module('kalk', []);
-    
+
 app.controller('kalk', function($scope) {
 
 $scope.shapes = [ // definition of shapes, declaring variables and calculation formulas
@@ -82,7 +82,6 @@ $scope.volume = function(currentShape){
 		case 'Cijev':
 			return $scope.currentShape.volume = (3.14159*currentShape.wallThickness*(currentShape.diameter-currentShape.wallThickness)*currentShape.length*0.000000001);
 			break;
-
 	}
 };
 
