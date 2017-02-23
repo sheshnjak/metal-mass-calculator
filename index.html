@@ -65,7 +65,12 @@ $scope.currentShape = $scope.shapes[0]; 	// default shape
 $scope.currentInput = 0;					// 
 $scope.setCurrentShape = function(shape){ 	// user select shape
 	$scope.currentShape = shape;
-//	$scope.currentInput = 0;
+	$scope.currentInput = 0;
+/*	$timeout(function () {
+		$scope.focusNextInput(); 
+		alert("$scope.focusNextInput()") 
+	}, 0, false);
+*/
 };
 
 $scope.focusNextInput = function(){			// select content of current input field and increment/reset currentInput variable if needed
