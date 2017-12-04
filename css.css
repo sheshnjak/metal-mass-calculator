@@ -26,3 +26,8 @@ table {
 	width: 400px;
 	background: url(./primitives.png) no-repeat;
 }
+#charmap {
+	display: block;
+	float: right;
+	font-size: 0.5 em;
+}
