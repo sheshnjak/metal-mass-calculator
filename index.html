@@ -488,14 +488,43 @@
 		color: white;
 		text-decoration: none;
 	}
-  </style>
+  .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .char-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+    .char-btn {
+        background: #475569;
+        border: 1px solid #94a3b8;
+        color: white;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.2s;
+    }
+    .char-btn:hover {
+        background: #64748b;
+    }
+</style>
 </head>
 <body ng-controller="CalculatorCtrl">
   <div class="header">
     <div class="header-content">
-      <h1>🔧 Kalkulator mase metala</h1>
-      <p>Brzo i precizno izračunavanje mase metalnih profila by <a href="https://tomislavdekovic.iz.hr" class="brend">.:sheshnjak:.</a>.</p>
+      <div>
+        <h1>🔧 Kalkulator mase metala</h1>
+        <p>Brzo i precizno izračunavanje mase metalnih profila by <a href="https://tomislavdekovic.iz.hr" class="brend">.:sheshnjak:.</a>.</p>
+      </div>
+      <div class="char-buttons">
+        <button class="char-btn" onclick="copyToClipboard('Ø')">Ø</button>
+        <button class="char-btn" onclick="copyToClipboard('±')">±</button>
+      </div>
     </div>
+
   </div>
 
   <div class="container">
@@ -945,5 +974,14 @@
       });
     }
   </script>
+    <script>
+      function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+          console.log('Character ' + text + ' copied to clipboard');
+        }, function(err) {
+          console.error('Could not copy text: ', err);
+        });
+      }
+    </script>  
 </body>
 </html>
